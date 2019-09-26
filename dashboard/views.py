@@ -100,10 +100,6 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
             return redirect('../../dashboard/')
     else:
         form = SignUpForm()
@@ -125,14 +121,10 @@ def update(request):
 
 
 def edit_remove(request):
-    staff = User.objects.filter(is_staff=True, is_superuser=False)
+    staff = User.objects.filter(is_staff=False, is_superuser=False)
     context = {'staff': staff}
     return render(request, 'dashboard/edit_remove.html', context)
 
 
 def pupdate(request, user_id):
     return render(request, '/dashboard/edit_remove.html', {'user_id', user_id})
-
-
-
-    
